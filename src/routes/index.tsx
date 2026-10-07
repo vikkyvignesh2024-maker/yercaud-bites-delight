@@ -21,6 +21,9 @@ export const Route = createFileRoute("/")({
 });
 function Index() {
   const root = useRef<HTMLDivElement>(null);
-  useEffect(() => { if (root.current) return initializeWebsite(root.current); }, []);
+  useEffect(() => {
+    if (!root.current) return undefined;
+    return initializeWebsite(root.current);
+  }, []);
   return <div ref={root} dangerouslySetInnerHTML={{ __html: renderedHtml }} />;
 }
