@@ -13,7 +13,8 @@ export function initializeWebsite(root = document) {
  all('[data-cart-open]').forEach(el=>on(el,'click',()=>one('#cart-dialog').showModal()));
  all('[data-dialog-close]').forEach(el=>on(el,'click',()=>el.closest('dialog').close()));
  all('dialog').forEach(el=>on(el,'click',e=>{if(e.target===el){const r=el.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)el.close();}}));
- all('[data-filter]').forEach(el=>on(el,'click',()=>{all('[data-filter]').forEach(b=>{b.classList.toggle('active',b===el);b.setAttribute('aria-pressed',String(b===el));});all('[data-category]').forEach(card=>card.hidden=el.dataset.filter!=='All'&&card.dataset.category!==el.dataset.filter);}));
+  all('[data-filter]').forEach(el=>on(el,'click',()=>{all('[data-filter]').forEach(b=>{b.classList.toggle('active',b===el);b.setAttribute('aria-pressed',String(b===el));});all('[data-category]').forEach(card=>card.hidden=el.dataset.filter!=='All'&&card.dataset.category!==el.dataset.filter);}));
+  all('.faq-toggle').forEach(el=>on(el,'click',()=>{const expanded=el.getAttribute('aria-expanded')==='true';el.setAttribute('aria-expanded',String(!expanded));const panel=one('#'+el.getAttribute('aria-controls'));if(panel)panel.hidden=expanded;}));
  on(one('#mobile-toggle'),'click',()=>{const expanded=one('#site-nav').classList.toggle('is-open');one('#mobile-toggle').setAttribute('aria-expanded',String(expanded));});
  all('a[href^="#"]').forEach(el=>on(el,'click',()=>{one('#site-nav').classList.remove('is-open');one('#mobile-toggle').setAttribute('aria-expanded','false');}));
  const scroll=()=>{one('#site-header')?.classList.toggle('scrolled',window.scrollY>30);one('#back-top')?.classList.toggle('visible',window.scrollY>700);};on(window,'scroll',scroll);scroll();on(one('#back-top'),'click',()=>window.scrollTo({top:0,behavior:'smooth'}));
